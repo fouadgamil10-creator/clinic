@@ -1,0 +1,1373 @@
+/* --- (جديد) 1. استيراد الخطوط المميزة (Google Fonts) --- */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+/* --- 2. متغيرات الألوان والأنماط العامة --- */
+:root {
+  --primary-color: #007bff; /* أزرق طبي احترافي */
+  --primary-color-rgb: 0, 123, 255; /* جديد: نفس اللون بصيغة RGB */
+  --secondary-color: #1abc9c; /* أخضر مائل للأزرق (مريح) */
+  --text-color: #333; /* لون النص الرئيسي */
+  --light-bg-color: #f4f7f6; /* لون خلفية فاتح للأقسام */
+  --white-color: #ffffff;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  line-height: 1.7;
+  background-color: var(--white-color);
+  color: var(--text-color);
+}
+
+/* (جديد) التحكم في الخط والاتجاه بناءً على اللغة */
+body.lang-ar {
+  font-family: 'Cairo', sans-serif; /* <-- تم التغيير */
+  direction: rtl;
+}
+body.lang-en {
+  font-family: 'Poppins', sans-serif; /* <-- تم التغيير */
+  direction: ltr;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+ul {
+  list-style: none;
+}
+
+section {
+  padding: 60px 0;
+}
+
+section h3, .partners-section h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  color: var(--primary-color);
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+/* --- 3. رأس الصفحة (Header) --- */
+header {
+  background: var(--white-color);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: padding 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+header.scrolled {
+  padding: 10px 0; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+  background-color: rgba(255, 255, 255, 0.98); 
+  backdrop-filter: blur(5px); 
+}
+
+/* (معدل) تعديل هذا القسم ليتوسط القائمة */
+header .container {
+  display: flex;
+  /* justify-content: space-between; <-- إزالة هذا السطر */
+  align-items: center;
+  gap: 30px; /* (جديد) إضافة فجوة بين اللوجو والقائمة */
+}
+
+/* --- (معدل) لوجو مائل ومزخرف --- */
+.logo {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-style: italic;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+  animation: pulseLogoGlow 3s infinite ease-in-out; 
+  flex-shrink: 0; /* (جديد) منع اللوجو من الانضغاط */
+}
+
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+@keyframes pulseLogoGlow {
+  0% {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.7), 0 0 20px rgba(26, 188, 156, 0.3);
+  }
+  100% {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* (جديد) اجعل شريط التنقل يتمدد ليملأ الفراغ */
+header nav {
+  flex-grow: 1;
+}
+
+/* (معدل) اجعل القائمة بداخل شريط التنقل تتمدد */
+header nav ul {
+  display: flex;
+  align-items: center;
+  width: 100%; /* (جديد) اجعلها تملأ شريط التنقل */
+  white-space: nowrap; /* (جديد) منع الروابط من النزول لسطر جديد */
+}
+
+
+/* (معدل) هذا هو التعديل الأساسي لحل مشكلة اللغة الإنجليزية */
+header nav li {
+  /* (جديد) التحكم في الهامش حسب اللغة */
+  body.lang-ar & { margin-right: 20px; } /* <-- (معدل) تم التغيير من 25 إلى 20 */
+  body.lang-en & { margin-left: 20px; } /* <-- (معدل) تم التغيير من 17 إلى 20 */
+}
+
+header nav a {
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+header nav a:hover,
+header nav a.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* --- (جديد) تصميم زر تبديل اللغة --- */
+.lang-btn {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif; /* <-- تم التغيير */
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.lang-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* --- 3.1 (معدل) تنظيم أيقونات الهيدر والفاصل --- */
+
+/* (جديد) هذا هو الفاصل السحري 
+   ابحث عن الـ li الذي يحتوي على زر اللغة وادفعها للنهاية */
+header nav li:has(> #lang-toggle-btn) {
+  /* (جديد) تطبيق الفاصل التلقائي (margin: auto) عليه */
+  body.lang-ar & { 
+    margin-right: auto;  /* ادفع هذا الزر إلى أقصى اليسار */
+    margin-left: 0; /* إلغاء الهامش الافتراضي */
+    padding: 0; /* (جديد) إلغاء الحشو */
+  }
+  body.lang-en & { 
+    margin-left: auto; /* ادفع هذا الزر إلى أقصى اليمين */
+    margin-right: 0; /* إلغاء الهامش الافتراضي */
+    padding: 0; /* (جديد) إلغاء الحشو */
+  }
+}
+
+/* (معدل) li الأيقونة الاجتماعية (صفحة index.html فقط) */
+header nav li.header-social-icon {
+  position: relative;
+  /* (معدل) إزالة margin: auto من هنا */
+  
+  /* (جديد) فقط أضف مسافة *بين* الأيقونة وزر اللغة */
+  body.lang-ar & { 
+    margin-left: 15px; /* مسافة عن الزر الذي على يسارها */
+    margin-right: 0; /* إلغاء الهامش الافتراضي */
+    padding: 0; /* (جديد) إلغاء الحشو */
+  }
+  body.lang-en & { 
+    margin-right: 15px; /* مسافة عن الزر الذي على يمينها */
+    margin-left: 0; /* إلغاء الهامش الافتراضي */
+    padding: 0; /* (جديد) إلغاء الحشو */
+  }
+}
+
+/* (جديد) إزالة الفاصل الخطي (هذه القاعدة موجودة مسبقاً) */
+header nav li.header-social-icon::before {
+  display: none;
+}
+
+
+header nav li.header-social-icon a {
+  display: inline-block;
+  width: 36px; /* حجم أصغر للهيدر */
+  height: 36px;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  color: var(--primary-color);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36px; /* لمطابقة الارتفاع */
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none; /* إزالة الخط السفلي */
+  padding: 0; /* إزالة الحشو الافتراضي للروابط */
+}
+
+header nav li.header-social-icon a:hover {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  transform: scale(1.1);
+  border: none; /* تأكيد إزالة الخط السفلي عند الـ hover */
+}
+
+header nav li.header-social-icon a i {
+  line-height: 36px; /* لضمان التوسيط العمودي للأيقونة نفسها */
+}
+
+
+/* --- 4. القسم الترحيبي (Hero) --- */
+.hero {
+  background-image: linear-gradient(
+      rgba(0, 123, 255, 0.7),
+      rgba(0, 80, 160, 0.8)
+    ),
+    url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto-format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  color: var(--white-color);
+  text-align: center;
+  padding: 100px 0;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  margin-bottom: 30px;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--secondary-color);
+  color: var(--white-color);
+  padding: 12px 30px;
+  border-radius: 50px; 
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+  background-color: #16a085;
+  transform: translateY(-3px);
+}
+
+/* --- (جديد) قسم "من نحن" ورسالتنا ورؤيتنا --- */
+#about {
+  background-color: var(--white-color);
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  text-align: center;
+}
+
+.about-content p {
+  font-size: 1.15rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+.mission-vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.mv-card {
+  background: var(--light-bg-color);
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  border-top: 4px solid var(--secondary-color);
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.07);
+}
+
+.mv-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px auto;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mv-icon i {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.mv-card h4 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.mv-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+
+/* --- 5. قسم الخدمات (Services) --- */
+#services {
+  background-color: var(--light-bg-color);
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.service-card {
+  background: var(--white-color);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  padding: 30px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- (تعديل) لجعل الأيقونات تقبل SVG --- */
+.service-card .service-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 25px auto;
+  background-color: rgba(var(--primary-color-rgb), 0.1); 
+  border-radius: 50%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 18px; /* (جديد) هام لضبط حجم الـ SVG */
+}
+
+/* (معدل) استهداف "i" و "svg" */
+.service-card .service-icon i,
+.service-card .service-icon svg {
+  font-size: 2.5rem; /* للأيقونات القديمة */
+  color: var(--primary-color); 
+  width: 100%; /* (جديد) لجعل الـ SVG يملأ الدائرة */
+  height: 100%; /* (جديد) */
+  fill: var(--primary-color); /* (جديد) لتلوين الـ SVG */
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  background-color: var(--primary-color); 
+}
+
+/* (معدل) استهداف "i" و "svg" عند الـ hover */
+.service-card:hover .service-icon i,
+.service-card:hover .service-icon svg {
+  color: var(--white-color); 
+  fill: var(--white-color); /* (جديد) لتلوين الـ SVG بالأبيض */
+}
+/* --- نهاية تعديل أيقونات الخدمات --- */
+
+
+.service-card h4 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* --- 6. قسم الأطباء (Doctors) --- */
+#doctors {
+  background-color: var(--white-color);
+  background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/plus.png');
+  background-repeat: repeat;
+}
+
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.doctor-card {
+  background: var(--white-color);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  border-top: 5px solid var(--secondary-color);
+}
+
+.doctor-card h4 {
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.doctor-card p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* --- 7. قسم حجز المواعيد (Appointment) --- */
+#appointment {
+  background-color: var(--light-bg-color);
+}
+
+/* --- (جديد) قسم شركات التأمين --- */
+.partners-section {
+  padding: 60px 0;
+  background-color: #ffffff;
+}
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 30px;
+  align-items: center;
+  justify-items: center;
+}
+
+.logo-item {
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.logo-item:hover {
+  transform: scale(1.1);
+}
+
+.logo-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: #f4f7f6;
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0 auto 15px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo-circle img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.logo-item h4 {
+  color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+/* --- نهاية قسم شركات التأمين --- */
+
+
+/* --- 8. قسم التواصل (Contact) --- */
+#contact {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  text-align: center;
+}
+
+#contact h3 {
+  color: var(--white-color);
+}
+
+#contact p {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+/* --- 9. تذييل الصفحة (Footer) --- */
+footer {
+  background: #333;
+  color: #aaa;
+  text-align: center;
+  padding: 25px 0;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* --- (جديد) تنسيق خريطة الموقع --- */
+.map-container {
+  margin-top: 30px;
+  border-radius: 10px;
+  overflow: hidden; /* لإخفاء زوايا الخريطة وتطبيق التدوير */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 3px solid var(--white-color); /* (اختياري) لإضافة إطار أبيض حول الخريطة */
+}
+
+.map-container iframe {
+  display: block; /* لإزالة أي مسافات إضافية أسفل الخريطة */
+  width: 100%;
+  border: 0;
+}
+
+/* --- (جديد) تنسيق زر قائمة الموبايل (الهامبرجر) --- */
+.menu-toggle {
+  display: none; /* إخفاء الزر على الكمبيوتر */
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+
+/* --- 10. التجاوب مع الشاشات (Responsive) --- */
+@media (max-width: 768px) {
+  header .container {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px; /* (معدل) تقليل الفجوة في الموبايل */
+  }
+
+  /* === (جديد) كود قائمة الموبايل === */
+  .menu-toggle {
+    display: block;
+    order: -1; /* يجعله يسبق القائمة في الترتيب */
+    margin-bottom: 15px; 
+  }
+
+  header nav {
+    width: 100%;
+    display: none; /* إخفاء القائمة افتراضياً */
+  }
+
+  header nav.is-active {
+    display: block; /* إظهار القائمة عند الضغط */
+  }
+  /* === نهاية كود قائمة الموبايل === */
+
+
+  header nav ul {
+    flex-direction: column;
+    margin-top: 0; /* (معدل) */
+    width: 100%; /* (مهم) لضمان التوسيط في الموبايل */
+    white-space: normal; /* (جديد) السماح بالالتفاف في الموبايل */
+  }
+
+  header nav li {
+    /* (جديد) إزالة الهوامش الجانبية في الموبايل */
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    margin-bottom: 10px;
+  }
+
+  /* (جديد) تعديل أيقونة الهيدر في الموبايل */
+  header nav li.header-social-icon {
+    margin-bottom: 15px; /* مسافة إضافية */
+  }
+  
+  /* (جديد) تعديل زر اللغة في الموبايل */
+  header nav li:has(> #lang-toggle-btn) {
+     margin-bottom: 10px;
+  }
+  
+
+  .hero h2 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+
+  section h3, .partners-section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .logo-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+  }
+  .logo-circle {
+    width: 100px;
+    height: 100px;
+  }
+  .logo-item h4 {
+    font-size: 0.9rem;
+  }
+}
+
+/* تحسين لبطاقات الأطباء التي أصبحت روابط */
+.doctor-grid a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.doctor-grid a .doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 123, 255, 0.2);
+}
+
+/* --- 11. تصميم صفحات الحجز الحديثة --- */
+.booking-section {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  padding: 80px 0;
+  position: relative;
+  /* (جديد) تعديل اتجاه الخلفية */
+  body.lang-ar & {
+    background: linear-gradient( to left, var(--light-bg-color) 50%, var(--white-color) 50% );
+  }
+  body.lang-en & {
+    background: linear-gradient( to right, var(--light-bg-color) 50%, var(--white-color) 50% );
+  }
+}
+
+.booking-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 250px;
+  height: 250px;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  z-index: 1;
+  opacity: 0.3;
+  /* (جديد) تعديل اتجاه الديكور */
+  body.lang-ar & {
+    right: 0;
+    border-radius: 50% 0 0 50%;
+    transform: translate(50%, -50%);
+  }
+  body.lang-en & {
+    left: 0;
+    border-radius: 0 50% 50% 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.booking-content-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--white-color);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  display: flex;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.booking-info-panel {
+  flex: 1;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.booking-info-panel h3 {
+  color: var(--white-color);
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.booking-info-panel p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.doctor-photo-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 20px auto;
+  border: 5px solid var(--secondary-color);
+}
+
+.doctor-photo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.booking-form-panel {
+  flex: 2;
+  padding: 40px;
+  background-color: var(--light-bg-color);
+}
+
+.booking-form-panel h3 {
+  /* (جديد) تعديل اتجاه النص */
+  body.lang-ar & { text-align: right; }
+  body.lang-en & { text-align: left; }
+  
+  color: var(--text-color);
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+/* تنسيقات النموذج (لصفحات الحجز) */
+.booking-form-panel #appointment-form input,
+.booking-form-panel #appointment-form select,
+.booking-form-panel #appointment-form button {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  
+  /* (جديد) تطبيق الخط المناسب للنموذج */
+  body.lang-ar & { font-family: 'Cairo', sans-serif; } /* <-- تم التغيير */
+  body.lang-en & { font-family: 'Poppins', sans-serif; } /* <-- تم التغيير */
+}
+
+.booking-form-panel #appointment-form input:focus,
+.booking-form-panel #appointment-form select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.booking-form-panel #appointment-form button {
+  background: var(--primary-color);
+  color: var(--white-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.booking-form-panel #appointment-form button:hover {
+  background: #0056b3;
+}
+
+/* تجاوب صفحات الحجز */
+@media (max-width: 850px) {
+  .booking-section {
+    background: var(--light-bg-color);
+  }
+  .booking-content-wrapper {
+    flex-direction: column;
+    margin: 20px;
+  }
+  .booking-info-panel {
+    order: -1;
+    border-radius: 15px 15px 0 0;
+    padding: 20px;
+  }
+  .booking-form-panel {
+    padding: 30px 20px;
+  }
+}
+
+/* --- 12. تنسيق القائمة المنسدلة (Dropdown Menu) --- */
+header nav ul li.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+header nav ul li.dropdown a.dropbtn {
+  position: relative;
+  /* (جديد) تعديل الحشو لاتجاه السهم */
+  body.lang-ar & { padding-left: 25px; padding-right: 10px; } /* <-- (معدل) */
+  body.lang-en & { padding-right: 25px; padding-left: 10px; } /* <-- (معدل) */
+}
+
+header nav ul li.dropdown a.dropbtn::after {
+  content: '▼';
+  font-size: 0.6em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+  /* (جديد) تعديل مكان السهم */
+  body.lang-ar & { left: 8px; right: auto; } /* <-- (معدل) */
+  body.lang-en & { right: 8px; left: auto; } /* <-- (معدل) */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--white-color);
+  min-width: 180px;
+  box-shadow: var(--box-shadow);
+  z-index: 200;
+  top: 100%;
+  border-radius: 5px;
+  border-top: 3px solid var(--secondary-color);
+  /* (جديد) تعديل مكان القائمة المنسدلة */
+  body.lang-ar & { right: 0; }
+  body.lang-en & { left: 0; }
+}
+
+.dropdown-content a {
+  color: var(--text-color);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  transform: translateX(0);
+  /* (جديد) تعديل اتجاه النص والحركة */
+  body.lang-ar & { text-align: right; }
+  body.lang-en & { text-align: left; }
+}
+
+body.lang-ar .dropdown-content a:hover {
+  background-color: var(--light-bg-color);
+  color: var(--primary-color);
+  transform: translateX(-5px);
+}
+body.lang-en .dropdown-content a:hover {
+  background-color: var(--light-bg-color);
+  color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+
+header nav ul li.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+header nav ul li.dropdown:hover a.dropbtn::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* --- تصحيح سهم حقل اختيار (Select Arrow Fix) --- */
+#appointment-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' fill='%23333'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 15px;
+  /* (جديد) تعديل مكان السهم والحشو */
+  body.lang-ar & {
+    background-position: left 15px center;
+    padding-left: 40px !important;
+  }
+  body.lang-en & {
+    background-position: right 15px center;
+    padding-right: 40px !important;
+  }
+}
+
+/* --- 13. تنسيق قسم الدفع الإلكتروني (InstaPay) --- */
+.payment-method-group {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: var(--white-color);
+}
+
+.instapay-details {
+  display: none; 
+  background-color: var(--light-bg-color);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px; /* (معدل) */
+  /* (جديد) تعديل اتجاه الحدود */
+  body.lang-ar & { border-right: 4px solid var(--secondary-color); }
+  body.lang-en & { border-left: 4px solid var(--secondary-color); }
+}
+
+.instapay-details h4 {
+  color: var(--secondary-color);
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.instapay-details p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+.instapay-details .important-note {
+  font-weight: bold;
+  color: #e74c3c;
+  margin-top: 10px;
+  border-top: 1px dashed #ccc;
+  padding-top: 8px;
+}
+
+/* --- (جديد) تنسيق حقل رفع كارنيه التأمين --- */
+.insurance-upload-details {
+  background-color: var(--light-bg-color);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  
+  /* (جديد) تعديل اتجاه الحدود (بلون مختلف عن الدفع) */
+  body.lang-ar & { border-right: 4px solid var(--primary-color); }
+  body.lang-en & { border-left: 4px solid var(--primary-color); }
+}
+/* --- نهاية الإضافة --- */
+
+
+/* --- 14. (جديد) تصميم حقل التاريخ والوقت الرقمي --- */
+
+.datetime-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: var(--white-color);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.datetime-input-wrapper:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.datetime-input-wrapper svg {
+  color: var(--primary-color);
+  flex-shrink: 0;
+  opacity: 0.6;
+  /* (جديد) تعديل مكان الأيقونة */
+  body.lang-ar & { margin-left: 10px; }
+  body.lang-en & { margin-right: 10px; }
+}
+
+.datetime-input-wrapper input[type='text'] {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px 0;
+  background: transparent;
+  font-size: 1rem;
+  color: var(--text-color);
+  box-shadow: none;
+  width: 100%;
+  cursor: pointer;
+  /* (جديد) تطبيق الخط المناسب */
+  body.lang-ar & { font-family: 'Cairo', sans-serif; } /* <-- تم التغيير */
+  body.lang-en & { font-family: 'Poppins', sans-serif; } /* <-- تم التغيير */
+}
+
+.booking-form-panel #appointment-form .datetime-input-wrapper input {
+  width: auto;
+}
+
+/* --- 15. تخصيص ألوان Flatpickr (الشكل العصري) --- */
+.flatpickr-calendar {
+  font-family: 'Cairo', sans-serif; /* <-- تم التغيير */
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 99999;
+}
+/* (جديد) تعديل اتجاه التقويم للإنجليزية */
+body.lang-en .flatpickr-calendar {
+  direction: ltr;
+  font-family: 'Poppins', sans-serif; /* <-- تم التغيير */
+}
+body.lang-ar .flatpickr-calendar {
+  direction: rtl;
+  font-family: 'Cairo', sans-serif; /* <-- تم التغيير */
+}
+body.lang-ar .flatpickr-time {
+  direction: ltr; /* الوقت دائماً LTR */
+}
+body.lang-en .flatpickr-time {
+  direction: ltr;
+}
+
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: var(--white-color);
+}
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover {
+  background: #16a085 !important;
+  border-color: #16a085 !important;
+}
+
+.flatpickr-day.today {
+  border-color: var(--primary-color) !important;
+  font-weight: bold;
+}
+.flatpickr-day.today:hover {
+  background: var(--primary-color) !important;
+  color: #fff;
+}
+
+.flatpickr-day:hover,
+.flatpickr-day.inRange {
+  background: rgba(var(--primary-color-rgb), 0.1) !important;
+  border-color: rgba(var(--primary-color-rgb), 0.1) !important;
+}
+
+.flatpickr-day.flatpickr-disabled {
+  color: #ccc !important;
+  background: #f9f9f9 !important;
+  cursor: not-allowed;
+}
+
+.flatpickr-time input::-webkit-outer-spin-button,
+.flatpickr-time input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.flatpickr-time .flatpickr-am-pm,
+.flatpickr-time .flatpickr-hour,
+.flatpickr-time .flatpickr-minute {
+  -moz-appearance: textfield;
+}
+
+/* --- 16. (جديد) تنسيقات التحقق من النموذج (Validation) --- */
+
+form input:invalid {
+  box-shadow: none;
+}
+
+form input.invalid {
+  border-color: #e74c3c; 
+  background-color: #fef7f7; 
+}
+
+form input.valid {
+  border-color: #2ecc71; 
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: none; 
+  /* (جديد) تعديل اتجاه رسالة الخطأ */
+  body.lang-ar & { text-align: right; }
+  body.lang-en & { text-align: left; }
+}
+
+form input.invalid + .error-message {
+  display: block;
+}
+
+/* --- 17. (جديد) تأثيرات تفاعلية دقيقة --- */
+
+.btn:active {
+  transform: translateY(1px) scale(0.98); 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- (جديد) أكواد قسم آراء العملاء (من index.html) --- */
+.testimonials {
+  background-color: var(--light-bg-color);
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+.testimonials::before {
+  content: '\f10d';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 40px;
+  font-size: 10rem;
+  color: rgba(var(--primary-color-rgb), 0.05);
+  z-index: 1;
+  transform: rotate(10deg);
+}
+body.lang-ar .testimonials::before { right: 40px; }
+body.lang-en .testimonials::before { left: 40px; }
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  position: relative;
+  z-index: 2;
+}
+.testimonial-card {
+  background: var(--white-color);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+body.lang-ar .testimonial-card { border-right: 5px solid var(--secondary-color); }
+body.lang-en .testimonial-card { border-left: 5px solid var(--secondary-color); }
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.08);
+}
+.testimonial-card .rating { margin-bottom: 15px; color: #f39c12; }
+.testimonial-card .rating i { margin-left: 2px; }
+.testimonial-card .quote {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #555;
+  margin-bottom: 20px;
+  position: relative;
+}
+.testimonial-card .quote::before {
+  content: '“';
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  position: absolute;
+  top: -10px;
+}
+.testimonial-card .quote::after {
+  content: '”';
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  position: absolute;
+  bottom: -10px;
+}
+body.lang-ar .testimonial-card .quote::before { right: -15px; }
+body.lang-en .testimonial-card .quote::before { left: -15px; }
+body.lang-ar .testimonial-card .quote::after { left: 0; }
+body.lang-en .testimonial-card .quote::after { right: 0; }
+
+.testimonial-card .author {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+body.lang-ar .testimonial-card .author { text-align: left; }
+body.lang-en .testimonial-card .author { text-align: right; }
+
+/* --- 18. (جديد) تصميم روابط التواصل الاجتماعي في الفوتر --- */
+
+footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer .social-links {
+  text-align: center;
+  margin-bottom: 20px; 
+}
+
+footer .social-icon {
+  display: inline-block;
+  width: 44px; 
+  height: 44px;
+  background-color: rgba(255, 255, 255, 0.1); 
+  color: var(--white-color); 
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%; 
+  line-height: 42px; 
+  text-align: center;
+  font-size: 1.2rem; 
+  margin: 0 8px;
+  transition: all 0.3s ease;
+}
+
+footer .social-icon:hover {
+  background-color: var(--white-color); 
+  color: #3b5998; /* لون الفيسبوك */
+  transform: translateY(-5px) scale(1.05); 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+/* --- 19. (جديد) تنسيق مربعات اختيار الوقت --- */
+
+#time-slots-container {
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: var(--white-color);
+  padding: 15px;
+}
+
+#time-slots-container h4 {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* (جديد) تعديل اتجاه النص */
+  body.lang-ar & { text-align: right; }
+  body.lang-en & { text-align: left; }
+}
+
+#time-slots-container h4:first-child {
+  margin-top: 0;
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+}
+
+.time-slot-box {
+  background-color: var(--light-bg-color);
+  border: 2px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  font-family: 'Poppins', sans-serif; /* (جديد) خط واضح للأرقام */
+  font-size: 1rem;
+}
+
+.time-slot-box:hover {
+  border-color: var(--secondary-color);
+  background-color: #f0f9f8;
+  color: var(--secondary-color);
+}
+
+.time-slot-box.selected {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--white-color);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(26, 188, 156, 0.7);
+}
+
+.time-slot-box.disabled {
+  background-color: #f9f9f9;
+  border-color: #eee;
+  color: #bbb;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.time-slot-box.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* (جديد) إخفاء رسالة الخطأ الافتراضية للوقت */
+#time-error-message {
+  display: none;
+}
+#time-error-message.show {
+  display: block;
+}
+
+/* --- 21. (جديد) تنسيق صندوق تفاصيل السعر الديناميكي --- */
+.price-details-display {
+  background-color: var(--light-bg-color);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px; /* يظهر تحت القائمة المنسدلة */
+  margin-bottom: 15px;
+  display: none; /* يبدأ مخفياً */
+  
+  /* تعديل اتجاه الحدود */
+  body.lang-ar & { border-right: 4px solid #f39c12; }
+  body.lang-en & { border-left: 4px solid #f39c12; }
+}
+
+.price-details-display p {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.price-details-display .important-note {
+  font-weight: bold;
+  color: #e74c3c;
+  margin-top: 10px;
+  border-top: 1px dashed #ccc;
+  padding-top: 8px;
+  font-size: 0.9rem;
+}
+/* --- نهاية الإضافة --- */
+/* --- تنسيق صفحة ملف الطبيب (اللي بنصلحه دلوقتي) --- */
+
+/* 1. ده كود الديسكتوب (اللي إنت مسحته من الخطوة الأولى) */
+.profile-details {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.profile-details .info-block {
+  flex: 2; /* كتلة الكلام تاخد مساحة أكبر */
+}
+
+.profile-details .image-block {
+  flex: 1; /* كتلة الصورة تاخد مساحة أقل */
+  min-width: 250px;
+}
+
+/* 2. (مهم جداً) ده كود الموبايل اللي هيظبط الشكل */
+@media (max-width: 768px) {
+  .profile-details {
+    /* دي أهم واحدة: 
+      بتقوله اقلبهم "عمودي" + "اعكس ترتيبهم"
+      عشان الصورة والزرار يطلعوا فوق زي ما إنت عايز
+    */
+    flex-direction: column-reverse; 
+    gap: 20px; /* بنقلل المسافة شوية في الموبايل */
+  }
+
+  /* (اختياري) الكود ده عشان يخلي الصورة والزرار في النص */
+  .profile-details .image-block {
+    width: 100%;
+    margin: 0 auto; /* توسيط الكتلة نفسها */
+  }
+  
+  .profile-details .image-block img {
+     display: block;
+     margin: 0 auto; /* توسيط الصورة جوه الكتلة */
+  }
+
+  .profile-details .image-block a.btn {
+    width: 100%; /* خلي الزرار ياخد 100% من عرض كتلة الصورة */
+    max-width: 350px; /* ممكن تحدد عرض أقصى للزرار */
+  }
+}

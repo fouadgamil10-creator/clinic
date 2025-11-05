@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ar" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
+    <title data-lang-key="siteTitle">عيادة فاميلي كلينك (Family Clinic) | باطنة وأطفال بالمعادي</title>
+    <meta name="description" content="عيادة فاميلي كلينك (Family Clinic) بالمعادي. رعاية طبية متكاملة في تخصصات الباطنة والكلى (د/ ماجد فوزي) والأطفال وحديثي الولادة (د/ شهيرة لويز). احجز موعدك الآن." />
+    <meta name="keywords" content="عيادة, family clinic, عيادة في المعادي, دكتور باطنة, دكتور أطفال, دكتور كلى, ماجد فوزي, شهيرة لويز, حجز عيادة" />
+    <meta name="author" content="fouadgamil" />
+
+    <link rel="canonical" href="https://your-website.com/index.html" />
+
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+
+    <meta property="og:title" content="عيادة فاميلي كلينك (Family Clinic) | باطنة وأطفال بالمعادي" />
+    <meta property="og:description" content="رعاية طبية متكاملة في الباطنة والكلى والأطفال وحديثي الولادة بالمعادي." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-website.com/index.html" />
+    <meta property="og:image" content="https://your-website.com/images/clinic_social_image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Family Clinic" />
+
+    <link rel="stylesheet" href="style.css?v=5" /> <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css"
+    />
+
+    <style>
+      /* --- شاشة التحميل (Splash Screen) --- */
+      #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f4f7f6;
+        display: flex;
+        flex-direction: column; /* (معدل) لتنظيم العناصر عمودياً */
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 1s ease-out, visibility 1s ease-out;
+        visibility: visible;
+      }
+
+      #splash-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      /* --- محمل رسم النبض (EKG) --- */
+      /* (معدل) تم تكبير الحجم وإزالة الإطار المربع */
+      .ekg-loader {
+        width: 350px; /* (معدل) تم التكبير */
+        height: 100px; /* (معدل) تم التكبير */
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ekg-loader svg {
+        width: 200%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: move-ekg 1.5s linear infinite;
+      }
+
+      @keyframes move-ekg {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      
+      /* (جديد) تنسيق اسم العيادة المتوهج */
+      .splash-logo-text {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 20px;
+        font-family: 'Cairo', 'Poppins', sans-serif; /* ضمان تطبيق الخط */
+        animation: glow-animation 2s infinite ease-in-out;
+      }
+
+      /* (جديد) أنيميشن التوهج */
+      @keyframes glow-animation {
+        0% { text-shadow: 0 0 5px rgba(var(--primary-color-rgb), 0.5); }
+        50% { text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 1); }
+        100% { text-shadow: 0 0 5px rgba(var(--primary-color-rgb), 0.5); }
+      }
+      
+      /* (جديد) تنسيق شريط التحميل */
+      .loading-bar-container {
+        width: 200px; /* عرض الشريط */
+        height: 4px; /* سمك الشريط */
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+        margin-top: 25px; /* مسافة من الاسم */
+        overflow: hidden; /* لإخفاء حركة الخط بالداخل */
+        position: relative;
+      }
+
+      .loading-bar-progress {
+        width: 40%; /* عرض الخط المتحرك (80px) */
+        height: 100%;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+        position: absolute;
+        animation: loading-progress-animation 1.5s ease-in-out infinite;
+      }
+
+      /* (جديد) أنيميشن حركة شريط التحميل */
+      @keyframes loading-progress-animation {
+        0% {
+          transform: translateX(-80px); /* يبدأ من خارج الشاشة (يسار) */
+        }
+        100% {
+          transform: translateX(200px); /* يتحرك حتى يخرج من الشاشة (يمين) */
+        }
+      }
+
+      /* (جديد) تنسيق النص أسفل شريط التحميل */
+      .splash-loading-text {
+        font-family: 'Cairo', sans-serif;
+        color: var(--text-color);
+        font-size: 1rem;
+        margin-top: 15px;
+        opacity: 0.8;
+      }
+      
+      /* --- لتغيير صورة الخلفية الرئيسية --- */
+      .hero {
+        background-image: linear-gradient(
+            rgba(0, 123, 255, 0.7),
+            rgba(0, 80, 160, 0.8)
+          ),
+          url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2070&auto-format&fit-crop') !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="splash-screen">
+      <div class="ekg-loader">
+        <svg viewBox="0 0 200 60">
+          <path
+            d="M 0 30 H 40 L 45 10 L 55 50 L 60 30 H 100 M 100 30 H 140 L 145 10 L 155 50 L 160 30 H 200"
+            stroke="var(--primary-color)"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+      
+      <h1 class="splash-logo-text" data-lang-key="logoText">Family Clinic</h1>
+      
+      <div class="loading-bar-container">
+        <div class="loading-bar-progress"></div>
+      </div>
+      
+      <p class="splash-loading-text">يتم تحميل الخدمة الطبية</p>
+
+      <img
+        src="images/dr_magid_photo.jpg"
+        alt="Family Clinic Doctors"
+        style="
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 10px;
+          margin: 20px auto 0 auto;
+          display: block;
+          box-shadow: var(--box-shadow);
+        "
+      />
+      </div>
+      <div id="main-content" style="display: none">
+        <header>
+          <div class="container">
+          <h1 class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+              <span data-lang-key="logoText">Family Clinic</span>
+            </a>
+          </h1>
+            
+            <button class="menu-toggle" aria-label="Toggle Navigation Menu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <nav>
+              <ul>
+              <li><a href="index.html#home" data-lang-key="navHome">الرئيسية</a></li>
+              <li><a href="index.html#about" data-lang-key="navAbout">من نحن</a></li>
+              <li><a href="index.html#services" data-lang-key="navServices">الخدمات</a></li>
+
+              <li class="dropdown">
+                <a href="index.html#doctors" class="dropbtn" data-lang-key="navDoctors">الأطباء</a>
+                <div class="dropdown-content">
+                  <a href="drmaged.html" target="_blank" data-lang-key="navDrMaged">د/ ماجد فوزي</a>
+                  <a href="drshahira.html" target="_blank" data-lang-key="navDrShahira">د/ شهيرة لويز</a>
+                </div>
+              </li>
+              <li class="dropdown">
+                <a href="index.html#appointment" class="dropbtn" data-lang-key="navBooking">حجز موعد</a>
+                <div class="dropdown-content">
+                  <a href="booking_magid.html" target="_blank" data-lang-key="navDrMaged">د/ ماجد فوزي</a>
+                  <a href="booking_shahira.html" target="_blank" data-lang-key="navDrShahira">د/ شهيرة لويز</a>
+                </div>
+              </li>
+              <li><a href="index.html#contact" data-lang-key="navContact">اتصل بنا</a></li>
+              
+              <li class="header-social-icon">
+                <a href="https://www.facebook.com/Family.Clinic.Egypt?locale=ar_AR" target="_blank" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+              </li>
+              
+              <li><button id="lang-toggle-btn" class="lang-btn" data-lang-key="langBtn">العربية</button></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section id="home" class="hero">
+          <div class="container">
+            <h2 data-aos="fade-down" data-aos-delay="200" data-lang-key="heroTitle">نحن نهتم بصحتك</h2>
+            <p data-aos="fade-up" data-aos-delay="400" data-lang-key="heroSubtitle">
+              أفضل رعاية طبية على يد أمهر الأطباء.
+            </p>
+            <a
+              href="#appointment"
+              class="btn"
+              data-aos="zoom-in"
+              data-aos-delay="600"
+              data-lang-key="heroBtn"
+              >احجز موعد الآن</a
+            >
+          </div>
+        </section>
+
+        <section id="about" class="about">
+          <div class="container">
+            <h3 data-aos="fade-up" data-lang-key="aboutTitle">من نحن</h3>
+            
+            <div class="about-content" data-aos="fade-up" data-aos-delay="100">
+              <p data-lang-key="aboutText">
+                عيادة [family clinic] هي مركز طبي متكامل يجمع بين الخبرة العميقة والاهتمام الفردي لتقديم أفضل رعاية صحية لجميع أفراد الأسرة. نحن نؤمن بأن الصحة هي أساس الحياة السعيدة، ولهذا نلتزم بتوفير خدمات تشخيصية وعلاجية دقيقة في بيئة مريحة وآمنة.
+              </p>
+            </div>
+
+            <div class="mission-vision-grid">
+              <div class="mv-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="mv-icon"><i class="fa-solid fa-bullseye"></i></div>
+                <h4 data-lang-key="missionTitle">رسالتنا</h4>
+                <p data-lang-key="missionText">
+                  تقديم خدمات رعاية صحية عالية الجودة تتسم بالدقة والاحترافية، مع التركيز على بناء علاقة ثقة مستدامة مع مرضانا من خلال التعليم الصحي والدعم المستمر.
+                </p>
+              </div>
+              
+              <div class="mv-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="mv-icon"><i class="fa-solid fa-eye"></i></div>
+                <h4 data-lang-key="visionTitle">رؤيتنا</h4>
+                <p data-lang-key="visionText">
+                  أن نكون العيادة الرائدة والموثوقة في تقديم رعاية صحية شاملة ومبتكرة، وأن نصبح الخيار الأول للأسرة الباحثة عن التميز الطبي.
+                </p>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        <section id="services" class="services">
+          <div class="container">
+            <h3 data-aos="fade-up" data-lang-key="servicesTitle">خدماتنا</h3>
+
+            <div class="service-category" style="margin-top: 30px">
+              <h4
+                style="
+                  text-align: center;
+                  font-size: 1.8rem;
+                  color: var(--text-color);
+                  margin-bottom: 25px;
+                "
+                data-aos="fade-up"
+                data-lang-key="servicesMagedTitle"
+              >
+                خدمات الباطنة والكلى (د/ ماجد فوزي)
+              </h4>
+              <div class="service-grid">
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <div class="service-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                  </div>
+                  <h4 data-lang-key="serviceMaged1Title">متابعة السكري والضغط</h4>
+                  <p data-lang-key="serviceMaged1Desc">متابعة دورية لحالات السكري وارتفاع ضغط الدم المزمن.</p>
+                </div>
+                
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
+                  <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M244.2 24.3C237 15.2 225.8 11.5 214.6 13.9C133.4 33.3 64 100.8 64 184.8C64 286 164.2 384.8 244.2 491.7C248.8 498.9 257.2 498.9 261.8 491.7C341.8 384.8 442 286 442 184.8C442 100.8 372.6 33.3 291.4 13.9C280.2 11.5 269 15.2 261.8 24.3L253 34.1L244.2 24.3zM320 184.8C320 148.8 290.5 120 254.5 120C218.5 120 189 148.8 189 184.8C189 220.8 218.5 249.8 254.5 249.8C290.5 249.8 320 220.8 320 184.8z"/></svg>
+                  </div>
+                  <h4 data-lang-key="serviceMaged2Title">تشخيص أمراض الكلى</h4>
+                  <p data-lang-key="serviceMaged2Desc">
+                    تشخيص وعلاج حالات القصور الكلوي الحاد والمزمن ومتابعة الغسيل.
+                  </p>
+                </div>
+                
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M112.3 224c-11.6 0-21.7 8.1-24.3 19.3L48.8 384H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64c15 0 27.8-10.3 31.2-24.4l33.3-133.1C167 259.3 148 240 128 240c-3.1 0-6.1 .4-9.1 .9L112.3 224zM240 240c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64h16c17.7 0 32 14.3 32 32s-14.3 32-32 32H160c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c53 0 96-43 96-96v-64c0-35.3-28.7-64-64-64H240zm64 64v64c0 17.7-14.3 32-32 32H256c-17.7 0-32-14.3-32-32v-64c0-17.7 14.3-32 32-32h16c17.7 0 32 14.3 32 32zM480 0H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h64c17.7 0 32 14.3 32 32v64c0 53-43 96-96 96h-16c-17.7 0-32 14.3-32 32s14.3 32 32 32h16c88.4 0 160-71.6 160-160V96c0-17.7 14.3-32 32-32h64c17.7 0 32-14.3 32-32s-14.3-32-32-32z"/></svg>
+                  </div>
+                  <h4 data-lang-key="serviceMaged3Title">أمراض الجهاز الهضمي</h4>
+                  <p data-lang-key="serviceMaged3Desc">متابعة أمراض الجهاز الهضمي والقولون.</p>
+                </div>
+                
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
+                  <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M224 0c-17.7 0-32 14.3-32 32V48c0 17.7 14.3 32 32 32H352V90.7c0 17 6.7 33.3 18.7 45.3l9.6 9.6c12 12 28.3 18.7 45.3 18.7H480V352c0 35.3-28.7 64-64 64H352c-17.7 0-32 14.3-32 32s14.3 32 32 32h64c70.7 0 128-57.3 128-128V164.3c0-17-6.7-33.3-18.7-45.3L369.3 18.7C357.3 6.7 341 0 324.3 0H224zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H288c35.3 0 64-28.7 64-64V384c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H64c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32H288c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM160 256c-17.7 0-32 14.3-32 32s14.3 32 32 32h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H160zM128 192c0-17.7 14.3-32 32-32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32H160c-17.7 0-32-14.3-32-32z"/></svg>
+                  </div>
+                  <h4 data-lang-key="serviceMaged4Title">الفحص الدوري الشامل</h4>
+                  <p data-lang-key="serviceMaged4Desc">الفحص الدوري الشامل للبالغين.</p>
+                </div>
+                
+              </div>
+            </div>
+
+            <div
+              class="service-category"
+              style="
+                margin-top: 60px;
+                border-top: 1px solid #eee;
+                padding-top: 40px;
+              "
+            >
+              <h4
+                style="
+                  text-align: center;
+                  font-size: 1.8rem;
+                  color: var(--text-color);
+                  margin-bottom: 25px;
+                "
+                data-aos="fade-up"
+                data-lang-key="servicesShahiraTitle"
+              >
+                خدمات الأطفال وحديثي الولادة (د/ شهيرة لويز)
+              </h4>
+              <div class="service-grid">
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <div class="service-icon">
+                    <i class="fa-solid fa-baby"></i>
+                  </div>
+                  <h4 data-lang-key="serviceShahira1Title">رعاية حديثي الولادة</h4>
+                  <p data-lang-key="serviceShahira1Desc">
+                    متابعة شاملة لنمو الطفل منذ اليوم الأول ودعم الرضاعة
+                    الطبيعية.
+                  </p>
+                </div>
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
+                  <div class="service-icon">
+                    <i class="fa-solid fa-syringe"></i>
+                  </div>
+                  <h4 data-lang-key="serviceShahira2Title">التطعيمات وجداول النمو</h4>
+                  <p data-lang-key="serviceShahira2Desc">توفير جميع التطعيمات الأساسية والإضافية ومتابعة النمو.</p>
+                </div>
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="300"
+                >
+                  <div class="service-icon">
+                    <i class="fa-solid fa-child"></i>
+                  </div>
+                  <h4 data-lang-key="serviceShahira3Title">علاج أمراض الأطفال</h4>
+                  <p data-lang-key="serviceShahira3Desc">
+                    تشخيص وعلاج أمراض الجهاز التنفسي والنزلات المعوية الشائعة.
+                  </p>
+                </div>
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <div class="service-icon">
+                    <i class="fa-solid fa-apple-whole"></i>
+                  </div>
+                  <h4 data-lang-key="serviceShahira4Title">التوجيه الغذائي للطفل</h4>
+                  <p data-lang-key="serviceShahira4Desc">علاج حالات سوء التغذية، النحافة، والسمنة عند الأطفال.</p>
+                </div>
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
+                  <div class="service-icon">
+                    <i class="fa-solid fa-lungs-virus"></i>
+                  </div>
+                  <h4 data-lang-key="serviceShahira5Title">حساسية الصدر والربو</h4>
+                  <p data-lang-key="serviceShahira5Desc">تشخيص وعلاج حالات حساسية الصدر والربو عند الأطفال.</p>
+                </div>
+                <div
+                  class="service-card"
+                  data-aos="fade-up"
+                  data-aos-delay="300"
+                >
+                  <div class="service-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                  </div>
+                  <h4 data-lang-key="serviceShahira6Title">متابعة النمو والتطور</h4>
+                  <p data-lang-key="serviceShahira6Desc">متابعة التطور الحركي والذهني للطفل والتأكد من سلامته.</p>
+                </div>
+                </div>
+            </div>
+          </div>
+        </section>
+        
+        <section
+          id="doctors"
+          class="doctors-section"
+          style="padding: 50px 0; background-color: #f9f9f9"
+        >
+          <div class="container">
+            <h3
+              data-aos="fade-up"
+              style="text-align: center; margin-bottom: 40px"
+              data-lang-key="doctorsTitle"
+            >
+              فريق الأطباء
+            </h3>
+            <div class="doctor-grid">
+              <a
+                href="drmaged.html"
+                target="_blank"
+                style="text-decoration: none; color: inherit"
+              >
+                <div class="doctor-card" data-aos="fade-up" data-aos-delay="100">
+                  <h4 data-lang-key="navDrMaged">د/ ماجد فوزي</h4>
+                  <p data-lang-key="doctorMagedSpecialty">تخصص: [استشاري الباطنة والكلي والسكر]</p>
+                  <span
+                    style="
+                      display: block;
+                      color: var(--secondary-color);
+                      margin-top: 10px;
+                      font-weight: bold;
+                    "
+                    data-lang-key="doctorLearnMore"
+                    >اضغط لمعرفة المزيد...</span
+                  >
+                </div>
+              </a>
+
+              <a
+                href="drshahira.html"
+                target="_blank"
+                style="text-decoration: none; color: inherit"
+              >
+                <div class="doctor-card" data-aos="fade-up" data-aos-delay="200">
+                  <h4 data-lang-key="navDrShahira">د/ شهيرة لويز</h4>
+                  <p data-lang-key="doctorShahiraSpecialty">تخصص: [استشاري الاطفال وحديثي الولاده]</p>
+                  <span
+                    style="
+                      display: block;
+                      color: var(--secondary-color);
+                      margin-top: 10px;
+                      font-weight: bold;
+                    "
+                    data-lang-key="doctorLearnMore"
+                    >اضغط لمعرفة المزيد...</span
+                  >
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+          <div class="container">
+            <h3 data-aos="fade-up" data-lang-key="testimonialsTitle"> اراء مرضانا </h3>
+            <div class="testimonial-grid">
+              
+              <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="rating">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="quote" data-lang-key="testimonial1Quote">"رعاية ممتازة واهتمام حقيقي بصحة ابني. شكراً جزيلاً د/ شهيرة لويز على احترافيتك وذوقك."</p>
+                <p class="author" data-lang-key="testimonial1Author">- السيدة/ ن. أحمد</p>
+              </div>
+              
+              <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="rating">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="quote" data-lang-key="testimonial2Quote">"متابعة دقيقة لمرض السكري. د/ ماجد فوزي من أفضل وأشطر الأطباء الذين تعاملت معهم. أنصح به بشدة."</p>
+                <p class="author" data-lang-key="testimonial2Author">- الأستاذ/ م. فؤاد</p>
+              </div>
+              
+              <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="rating">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star-half-alt"></i>
+                </div>
+                <p class="quote" data-lang-key="testimonial3Quote">"العيادة نظيفة جداً ومنظمة، والممرضات متعاونات وودودات. تجربة مريحة والانتظار لم يكن طويلاً."</p>
+                <p class="author" data-lang-key="testimonial3Author">- أ/ سارة</p>
+              </div>
+
+            </div>
+          </div>
+        </section>
+        <section id="appointment" class="appointment">
+          <div class="container">
+            <h3 data-aos="fade-up" data-lang-key="bookingTitle">حجز موعد</h3>
+
+            <div
+              class="appointment-options"
+              data-aos="zoom-in-up"
+              style="text-align: center; margin-top: 30px"
+            >
+              <p style="margin-bottom: 25px; font-size: 1.1rem" data-lang-key="bookingSubtitle">
+                اختر الطبيب لإتمام الحجز:
+              </p>
+              <a
+                href="booking_magid.html"
+                target="_blank"
+                class="btn"
+                style="margin: 10px; min-width: 220px"
+                data-lang-key="bookingBtnMaged"
+                >حجز موعد
+                <br />
+                (د/ ماجد فوزي)</a
+              >
+              <a
+                href="booking_shahira.html"
+                target="_blank"
+                class="btn"
+                style="margin: 10px; min-width: 220px"
+                data-lang-key="bookingBtnShahira"
+                >حجز موعد
+                <br />
+                (د/ شهيرة لويز)</a
+              >
+            </div>
+          </div>
+        </section>
+       <section class="partners-section">
+  <h2 data-lang-key="partnersTitle">شركات التأمين  </h2>
+  <div class="logo-grid">
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/unicare.png" alt="Unicare Logo">
+      </div>
+      <h4 data-lang-key="partnerUnicare">Unicare</h4>
+    </div>
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/careplus.jfif" alt="Care Plus Logo">
+      </div>
+      <h4 data-lang-key="partnerCareplus">Care Plus</h4>
+    </div>
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/medright.png" alt="MedRight Logo">
+      </div>
+      <h4 data-lang-key="partnerMedright">MedRight</h4>
+    </div>
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/NEXT CARE.png" alt="Next Care Logo">
+      </div>
+      <h4 data-lang-key="partnerNextcare">NEXT CARE</h4>
+    </div>
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/alhly.jpg" alt="Al Ahly Medical Logo">
+      </div>
+      <h4 data-lang-key="partnerAlAhly">الأهلي للخدمات الطبية</h4>
+    </div>
+    
+
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/egycare.png" alt="EgyCare Logo">
+      </div>
+      <h4 data-lang-key="partnerEgycare">EGYCARE</h4>
+    </div>
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/dms.jfif" alt="DMS Logo">
+      </div>
+      <h4 data-lang-key="partnerDMS">DMS</h4>
+    </div>
+        <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/axa.png" alt="AXA Logo">
+      </div>
+      <h4 data-lang-key="partnerAXA">AXA</h4>
+    </div>
+    
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/نقابة المهندسين.png" alt="نقابة المهندسين Logo">
+      </div>
+      <h4 data-lang-key="partnerEngineers">نقابة المهندسين</h4>
+    </div>
+        <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/نقابة المحامين.jfif" alt="نقابة المحامين Logo">
+      </div>
+      <h4 data-lang-key="partnerLawyers">نقابة المحامين</h4>
+    </div>
+    <div class="logo-item">
+      <div class="logo-circle">
+        <img src="images/نقابة الاطباء.png" alt="نقابة الاطباء Logo">
+      </div>
+      <h4 data-lang-key="partnermedical">نقابة الاطباء</h4>
+    </div>
+  </div>
+</section>
+
+        <section id="contact" class="contact">
+          <div class="container">
+            <h3 data-aos="fade-up" data-lang-key="navContact">اتصل بنا</h3>
+            <p data-aos="fade-up" data-aos-delay="100" data-lang-key="contactAddress">
+              العنوان: [16-عمارات صقر قريش -بجوار البحث الجنائي-المعادي الجديده]
+            </p>
+            <p data-aos="fade-up" data-aos-delay="200" data-lang-key="contactPhone">
+              رقم الهاتف: [27474381-27475230-01275574553]
+            </p>
+            <p data-aos="fade-up" data-aos-delay="300" data-lang-key="contactEmail">
+              البريد الإلكتروني: [clinicfamily222@gmail.com]
+            </p>
+<div class="map-container" data-aos="fade-up" data-aos-delay="400">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110586.50874747924!2d31.355026632259722!3d29.984361268678587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458388caef3b723%3A0x88c9f66eae01b0b9!2z2K8gLyDYtNmH2YrYsdipINmE2YjZitiy!5e0!3m2!1sar!2seg!4v1762212160430!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></> width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+              
+            </div>
+            </div>
+        </section>
+      </main>
+
+  
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
+    
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
+    <title data-lang-key="bookMagedPageTitle">حجز موعد مع د/ ماجد فوزي (باطنة وكلى) | فاميلي كلينك</title>
+    <meta name="description" content="احجز موعدك بسهولة أونلاين مع د/ ماجد فوزي، استشاري الباطنة والكلى والسكر في فاميلي كلينك. اختر الموعد المناسب وقم بتأكيد الحجز." />
+    <meta name="keywords" content="حجز موعد, دكتور ماجد فوزي, حجز دكتور باطنة, حجز دكتور كلى, عيادة فاميلي كلينك المعادي" />
+    <meta name="author" content="fouadgamil />
+
+    <link rel="canonical" href="https://your-website.com/booking_magid.html" />
+
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+
+    <meta property="og:title" content="حجز موعد مع د/ ماجد فوزي | فاميلي كلينك" />
+    <meta property="og:description" content="احجز موعدك بسهولة أونلاين مع د/ ماجد فوزي، استشاري الباطنة والكلى والسكر." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-website.com/booking_magid.html" />
+    <meta property="og:image" content="https://your-website.com/images/maged.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Family Clinic" />
+    
+    <link rel="stylesheet" href="style.css?v=4" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css"
+    />
+    
+    <style>
+      /* (الكود الخاص بشاشة التحميل موجود هنا) */
+      #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f4f7f6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 1s ease-out, visibility 1s ease-out;
+        visibility: visible;
+      }
+      #splash-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .ekg-loader {
+        width: 350px;
+        height: 100px;
+        position: relative;
+        overflow: hidden;
+      }
+      .ekg-loader svg {
+        width: 200%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: move-ekg 1.5s linear infinite;
+      }
+      @keyframes move-ekg {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-50%); }
+      }
+      .splash-logo-text {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 20px;
+        font-family: 'Cairo', 'Poppins', sans-serif;
+        animation: glow-animation 2s infinite ease-in-out;
+      }
+      @keyframes glow-animation {
+        0% { text-shadow: 0 0 5px rgba(var(--primary-color-rgb), 0.5); }
+        50% { text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 1); }
+        100% { text-shadow: 0 0 5px rgba(var(--primary-color-rgb), 0.5); }
+      }
+      .loading-bar-container {
+        width: 200px;
+        height: 4px;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+        margin-top: 25px;
+        overflow: hidden;
+        position: relative;
+      }
+      .loading-bar-progress {
+        width: 40%;
+        height: 100%;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+        position: absolute;
+        animation: loading-progress-animation 1.5s ease-in-out infinite;
+      }
+      @keyframes loading-progress-animation {
+        0% { transform: translateX(-80px); }
+        100% { transform: translateX(200px); }
+      }
+      .splash-loading-text {
+        font-family: 'Cairo', sans-serif;
+        color: var(--text-color);
+        font-size: 1rem;
+        margin-top: 15px;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="splash-screen">
+      <div class="ekg-loader">
+        <svg viewBox="0 0 200 60">
+          <path
+            d="M 0 30 H 40 L 45 10 L 55 50 L 60 30 H 100 M 100 30 H 140 L 145 10 L 155 50 L 160 30 H 200"
+            stroke="var(--primary-color)"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+      <h1 class="splash-logo-text" data-lang-key="logoText">Family Clinic</h1>
+      <div class="loading-bar-container">
+        <div class="loading-bar-progress"></div>
+      </div>
+      <p class="splash-loading-text">يتم تحميل الخدمة الطبية</p>
+
+      <img
+        src="images/dr_magid_photo.jpg"
+        alt="Family Clinic Doctors"
+        style="
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 10px;
+          margin: 20px auto 0 auto;
+          display: block;
+          box-shadow: var(--box-shadow);
+        "
+      />
+      </div>
+    
+    <div id="main-content" style="display: none">
+      <header>
+        <div class="container">
+<h1 class="logo">
+  <a href="index.html" style="text-decoration: none; color: inherit;">
+    <span data-lang-key="logoText">Family Clinic</span>
+  </a>
+</h1>
+          
+          <button class="menu-toggle" aria-label="Toggle Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          
+          <nav>
+            <ul>
+              <li><a href="index.html#home" data-lang-key="navHome">الرئيسية</a></li>
+              <li><a href="index.html#services" data-lang-key="navServices">الخدمات</a></li>
+              <li>
+                <a href="index.html#doctors" class="active" data-lang-key="navDoctors">الأطباء</a>
+              </li>
+              <li><a href="#booking" data-lang-key="navBooking">حجز موعد</a></li>
+              <li><a href="index.html#contact" data-lang-key="navContact">اتصل بنا</a></li>
+              <li><button id="lang-toggle-btn" class="lang-btn" data-lang-key="langBtn">العربية</button></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section id="booking" class="booking-section">
+          <div class="container">
+            <div class="booking-content-wrapper" data-aos="zoom-in">
+              <div class="booking-info-panel">
+                <div class="doctor-photo-circle">
+                  <img
+                    src="images/maged.jpg"
+                    alt="صورة د/ ماجد فوزي"
+                  />
+                </div>
+                <h3 data-lang-key="navDrMaged">د/ ماجد فوزي</h3>
+                <p data-lang-key="drMagedSpecialty">استشاري الباطنة والكلى والسكر</p>
+
+                <div style="margin-top: 30px; font-size: 0.95rem; opacity: 0.8">
+                  <p data-lang-key="bookMoreInfo">المزيد من المعلومات:</p>
+                  <p data-lang-key="drMagedInfo1">• خبرة 20+ سنة في المجال.</p>
+                  <p data-lang-key="drMagedInfo2">• يركز على الرعاية الشاملة للمرضى.</p>
+                </div>
+              </div>
+
+              <div class="booking-form-panel">
+                <h3 data-lang-key="bookConfirmTitle">تأكيد حجز موعد</h3>
+                <p style="margin-bottom: 25px" data-lang-key="bookConfirmSubtitle">
+                  أكمل النموذج لتأكيد حجزك مع الطبيب المختص.
+                </p>
+                <form
+                  id="appointment-form"
+                  action="submit_appointment.php"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  
+                >
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="الاسم الكامل"
+                    data-lang-key="formFullName"
+                    required
+                  />
+                  <p class="error-message" data-lang-key="formErrorName">يجب إدخال اسم صحيح (أكثر من حرفين)</p>
+
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="البريد الإلكتروني"
+                    data-lang-key="formEmail"
+                    required
+                  />
+                  <p class="error-message" data-lang-key="formErrorEmail">الرجاء إدخال بريد إلكتروني صحيح</p>
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="رقم الهاتف"
+                    data-lang-key="formPhone"
+                    required
+                  />
+                  <p class="error-message" data-lang-key="formErrorPhone">
+                    الرجاء إدخال رقم هاتف صحيح (10 أو 11 رقم)
+                  </p>
+
+                  <select name="doctor_display" required disabled>
+                    <option value="doctor1" selected data-lang-key="formDrMagedSelected">
+                      د. [د/ ماجد فوزي] (محدد)
+                    </option>
+                  </select>
+                  <input type="hidden" name="doctor" value="doctor1" />
+
+                  <label
+                    for="insurance-company-select"
+                    style="
+                      display: block;
+                      font-weight: bold;
+                      margin-bottom: 10px;
+                      margin-top: 15px;
+                    "
+                    data-lang-key="formInsuranceCompany"
+                    >شركة التأمين (اختياري):</label
+                  >
+                  <select
+                    name="insurance_company"
+                    id="insurance-company-select"
+                    style="width: 100%; margin-bottom: 15px"
+                  >
+                    <option value="" data-lang-key="formInsuranceNone">لا يوجد تأمين / دفع نقدي</option>
+                    <option value="axa">أكسا (Axa)</option>
+                    <option value="nextcare">نكست كير (NextCare)</option>
+                    <option value="egycare">ايجي كير (EgyCare)</option>
+                    <option value="almasia">الماسية (Almasia)</option>
+                    <option value="careplus">كيربلس (CarePlus)</option>
+                    <option value="medright">ميدرايت (MedRight)</option>
+                    <option value="unicare">يوني كير (UniCare)</option>
+                    <option value="medical_syndicate">نقابة الأطباء(medical_syndicate)</option>
+                    <option value="engineers_syndicate">نقابة المهندسين(engineers_syndicate)</option>
+                    <option value="lawyers_syndicate">نقابة المحامين(lawyers_syndicate)</option>
+                  </select>
+                                                    
+                  <div id="insurance-card-upload-block" class="insurance-upload-details" style="display: none;">
+                    <label 
+                      for="insurance-card-input" 
+                      style="display: block; font-weight: bold; margin-bottom: 5px;" 
+                      data-lang-key="formInsuranceCardUpload">
+                      إرفاق صورة كارنيه التأمين:
+                    </label>
+                    <input
+                      type="file"
+                      name="insurance_card_photo"
+                      id="insurance-card-input"
+                      accept="image/png, image/jpeg, image/jpg"
+                      style="
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        background-color: var(--white-color);
+                        font-family: inherit;
+                      "
+                    />
+                    <p class="important-note" data-lang-key="formInsuranceCardRequired" style="margin-top: 8px; color: #e74c3c;">
+                      ⚠️ مطلوب لتأكيد الحجز بالتأمين.
+                    </p>
+                  </div>
+                  
+                  <div class="appointment-type-group" style="display: none;">
+                    <label for="appointment-type-select" style="display: block; font-weight: bold; margin-bottom: 10px;" data-lang-key="formAppointmentType">اختر نوع الزيارة:</label>
+                    <select name="appointment_type" id="appointment-type-select" style="width: 100%; margin-bottom: 0;" required>
+                      <option value="" data-lang-key="formAppointmentTypeSelect">اختر نوع الزيارة...</option>
+                      <option value="new" data-lang-key="formAppointmentTypeNew">كشف جديد</option>
+                      <option value="followup" data-lang-key="formAppointmentTypeFollowup">استشارة / متابعة</option>
+                    </select>
+                  </div>
+                  <div id="price-details-display" class="price-details-display"></div>
+                  <div class="payment-method-group">
+                    
+                    <label
+                      style="
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                      "
+                      data-lang-key="formPaymentMethod"
+                      >اختر طريقة الدفع:</label
+                    >
+                    <select
+                    name="payment_method"
+                    id="payment-method-select"
+                    style="width: 100%; margin-bottom: 0"
+                  >
+                      <option value="" data-lang-key="formPaymentSelect">اختر الطريقة...</option>
+                      <option value="cash" data-lang-key="formPaymentCash">نقداً في العيادة</option>
+                      <option value="instapay" data-lang-key="formPaymentInstapay">InstaPay / تحويل بنكي</option>
+                    </select>
+
+                    <div id="instapay-details-block" class="instapay-details">
+                      <h4 data-lang-key="formInstapayTitle">تفاصيل دفع InstaPay</h4>
+                      <p data-lang-key="formInstapayDesc">
+                        <img
+                          src="images/instapay_logo.png"
+                          alt="InstaPay"
+                          style="
+                            height: 20px;
+                            vertical-align: middle;
+                            margin: 0 5px;
+                          "
+                        />
+                        يرجى التحويل إلى عنوان الدفع التالي:
+                      </p>
+                      <p
+                        style="
+                          font-size: 1.2rem;
+                          color: var(--text-color);
+                          font-weight: 700;
+                        "
+                      >
+                        <span data-lang-key="formInstapayIPA">IPA:</span>
+                        <span style="color: var(--primary-color)"
+                          >fouadgamil0121@instapay</span
+                        >
+                      </p>
+                      <p
+                        style="
+                          font-size: 1.2rem;
+                          color: var(--text-color);
+                          font-weight: 700;
+                        "
+                      >
+                        <span data-lang-key="formInstapayPhone">أو رقم هاتف:</span>
+                        <span style="color: var(--primary-color)"
+                          >01221466517</span
+                        >
+                      </p>
+                      <p class="important-note" data-lang-key="formInstapayWarning">
+                        ⚠️ يرجى إرفاق صورة التحويل أدناه لتأكيد الحجز. (أو إرسالها عبر الواتساب).
+                      </p>
+
+                      
+                      <label
+                        for="transaction-screenshot"
+                        style="
+                          display: block;
+                          font-weight: bold;
+                          margin-top: 15px;
+                          margin-bottom: 5px;
+                        "
+                        data-lang-key="formInstapayUpload"
+                        >إرفاق صورة التحويل:</label
+                      >
+                      <input
+                        type="file"
+                        name="transaction_screenshot"
+                        id="transaction-screenshot"
+                        accept="image/png, image/jpeg, image/jpg"
+                        style="
+                          width: 100%;
+                          padding: 10px;
+                          border: 1px solid #ddd;
+                          border-radius: 8px;
+                          background-color: var(--white-color);
+                          font-family: inherit;
+                        "
+                      />
+                      </div>
+                  </div>
+                  
+                 <label
+                    for="booking-date-picker-magid"
+                    style="
+                      display: block;
+                      font-weight: bold;
+                      margin-bottom: 10px;
+                      margin-top: 15px;
+                    "
+                    data-lang-key="formDateTime"
+                    >اختر التاريخ أولاً:</label
+                  >
+                  <div class="datetime-input-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="20"
+                      height="20"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                      />
+                    </svg>
+                    <input
+                      type="text"
+                      id="booking-date-picker-magid"
+                      placeholder="اختر اليوم المناسب..."
+                      data-lang-key="formDateTimePlaceholder"
+                      required
+                    />
+                  </div>
+
+                  <div id="time-slots-container" style="display: none">
+                    </div>
+
+                  <input
+                    type="hidden"
+                    id="booking-datetime-magid"
+                    name="booking_datetime"
+                    required
+                  />
+                  <p class="error-message" id="time-error-message" style="margin-top: 5px;">الرجاء اختيار موعد</p>
+                  <button type="submit" class="btn" data-lang-key="formSubmitBtn">تأكيد حجز الموعد</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="container">
+          <p data-lang-key="footerRights">&copy; 2025 عيادة [family clinic]. جميع الحقوق محفوظة.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
+
+    <script src="script.js?v=2"></script>
+    
+    </body>
+</html>
